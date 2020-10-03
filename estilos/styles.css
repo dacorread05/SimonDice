@@ -71,7 +71,11 @@ body {
     position: absolute;
     top: calc(50% - 50px);
     left: calc(50% - 200px);
-  }
+    border: 10px solid #000000;
+    border-radius: 45%;
+    outline: 0;
+    font-weight: 700;
+}
 
   .hide {
     display: none;
