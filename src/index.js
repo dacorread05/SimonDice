@@ -7,14 +7,15 @@ const ULTIMO_NIVEL =  10;
 
 class Juego {
     constructor() {
+        this.inicializar = this.inicializar.bind(this);
         this.inicializar();
         this.generarSecuencia();
         setTimeout(this.siguienteNivel, 500);
     }
     inicializar() {
+        this.toggleBtnEmpezar();
         this.siguienteNivel = this.siguienteNivel.bind(this);
         this.Color = this.Color.bind(this);
-        btnEmpezar.classList.add('hide')
         this.nivel = 1;
         this.colores = {
             celeste,
@@ -23,6 +24,15 @@ class Juego {
             verde
         }
     }
+
+    toggleBtnEmpezar(){
+        if(btnEmpezar.classList.contains('hide')){
+            btnEmpezar.classList.remove('hide');
+        } else {
+            btnEmpezar.classList.add('hide');
+        }
+    }
+
     generarSecuencia(){
         this.secuencia = new Array(ULTIMO_NIVEL).fill(0).map(n => Math.floor(Math.random() * 4))
     }
@@ -95,14 +105,27 @@ class Juego {
                 this.nivel++;
                 this.eliminarClick();
                 if (this.nivel === (ULTIMO_NIVEL +1)){
-                    //GANO!
+                    this.Gano();
                 }else{
                     setTimeout(this.siguienteNivel, 1500);
                 }
             }
         } else {
-            //PERDIO!
+            this.Perdio();
         }
+    }
+
+    Gano(){
+        swal('GANASTE', 'Felicitaciones, ganaste', 'success')
+        .then(() => this.inicializar());
+    }
+
+    Perdio(){
+        swal('PERDISTE', 'Lo siento, pero perdiste', 'error')
+        .then(() => {
+            this.eliminarClick();
+            this.inicializar();
+        })
     }
 }
 
